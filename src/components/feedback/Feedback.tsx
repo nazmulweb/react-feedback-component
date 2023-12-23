@@ -20,10 +20,12 @@ export interface FeedbackProps {
     event: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>
   ) => void;
   open: boolean;
-  isFeedbackFooter: boolean;
-  headingTitle: string;
-  closable: boolean;
-  mode: string;
+  isFeedbackFooter?: boolean;
+  headingTitle?: string;
+  closable?: boolean;
+  isDarkMode?: boolean;
+  darkModeBgColor?: string;
+  darkModeColor?: string;
 
   overlay?: boolean;
   overlayClosable?: boolean;
@@ -47,15 +49,16 @@ const Feedback = (props: FeedbackProps) => {
     isFeedbackFooter = true,
     headingTitle = "test",
     closable = true,
-    mode = "light",
+    isDarkMode = false,
+    darkModeBgColor = "#111111",
+    darkModeColor = "#212121",
+
     /** overlay */
     overlay = true,
     overlayClosable = true,
     overlayColor = "#000",
     overlayOpacity = 0.4,
   } = props;
-
-  const isDark = mode === "light";
 
   return (
     <>
@@ -67,15 +70,20 @@ const Feedback = (props: FeedbackProps) => {
               "rf-open": open,
             })}
             style={{
-              color: isDark ? "#212121" : "#fff",
+              color: isDarkMode ? "#fff" : darkModeColor,
               width,
               height,
-              background: isDark ? "#fff" : "#111111",
+              background: isDarkMode ? darkModeBgColor : "#fff",
             }}
           >
             <div className="fr-feedback-body-wrapper">
               {/** =======feedback header======= */}
-              <div className="fr-feedback-header">
+              <div
+                className="fr-feedback-header"
+                style={{
+                  borderColor: isDarkMode ? darkModeColor : "#00000063",
+                }}
+              >
                 <div>{headingTitle && <h3>{headingTitle}</h3>}</div>
                 {/** =======feedback header close icon======= */}
                 {closable && (
@@ -88,7 +96,12 @@ const Feedback = (props: FeedbackProps) => {
               <div className="fr-feedback-body">{children}</div>
               {/** =======feedback footer======= */}
               {isFeedbackFooter && (
-                <div className="fr-feedback-footer">
+                <div
+                  className="fr-feedback-footer"
+                  style={{
+                    borderColor: isDarkMode ? darkModeColor : "#00000063",
+                  }}
+                >
                   <button onClick={onClose} className="fr-skip">
                     {skipIcon} <span>Skip</span>
                   </button>

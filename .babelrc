@@ -3,6 +3,5 @@
     "@babel/preset-react",
     "@babel/preset-env",
     "@babel/preset-typescript"
-  ],
-  "plugins": ["transform-object-rest-spread"]
+  ]
 }
